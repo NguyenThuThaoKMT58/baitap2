@@ -203,3 +203,11 @@ Mã hoá mật khẩu có thể thiết lập bằng tool: https://tms.tnut.edu.
 Chạy lại nodered bằng cách: mở cmd (quyền Admin), vào thư mục 'D:\nodejs\nodered' và chạy lệnh 'nssm restart a1-nodered'
 <img width="987" height="517" alt="Screenshot 2025-10-26 213217" src="https://github.com/user-attachments/assets/aaa66115-957c-4be2-8fc8-4e2cd0daf259" />
 Nodered sẽ yêu cầu nhập mật khẩu mới vào được giao diện cho admin tại: http://nguyenthuthao.com:1880
+
+7. Nhận xét bài làm:
+7.1. Hiểu quá trình cài đặt phần mềm và thư viện
+Biết cách cài Apache trên Windows từ bản ZIP (giải nén) và chỉnh httpd.conf/httpd-vhosts.conf.
+Hiểu ServerRoot / DocumentRoot và cách ánh xạ domain nội bộ qua file hosts.
+Biết cách cài Node.js và Node-RED, cách cài Node-RED global vào thư mục tùy chỉnh.
+Biết dùng nssm để chạy Node-RED như một Windows Service (start/stop/restart).
+Biết cài thêm package vào Node-RED qua Manage Palette.
