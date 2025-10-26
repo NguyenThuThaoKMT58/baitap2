@@ -203,11 +203,24 @@ Mã hoá mật khẩu có thể thiết lập bằng tool: https://tms.tnut.edu.
 Chạy lại nodered bằng cách: mở cmd (quyền Admin), vào thư mục 'D:\nodejs\nodered' và chạy lệnh 'nssm restart a1-nodered'
 <img width="987" height="517" alt="Screenshot 2025-10-26 213217" src="https://github.com/user-attachments/assets/aaa66115-957c-4be2-8fc8-4e2cd0daf259" />
 Nodered sẽ yêu cầu nhập mật khẩu mới vào được giao diện cho admin tại: http://nguyenthuthao.com:1880
+5. Tạo api back-end bằng nodered
+logic flow sẽ gồm 4 node theo thứ tự sau (thứ tự nối dây):
+<img width="1452" height="971" alt="image" src="https://github.com/user-attachments/assets/c22008df-9383-4414-af75-4ee969d17b71" />
+Test api thông qua trình duyệt: http://nguyenthuthao.com:1880/timkiem?q=thị
+6. Tạo giao diện front-end
+Tạo file index.html:
+<img width="1439" height="1077" alt="image" src="https://github.com/user-attachments/assets/13a0615b-32f0-473d-863e-43666b84ecb8" />
+Tạo file thuthao.js:
+<img width="1429" height="1073" alt="image" src="https://github.com/user-attachments/assets/9a543770-7f1d-4f76-bbaf-b6b7164cb2b7" />
+Tạo file thuthao.css:
+<img width="1275" height="1079" alt="image" src="https://github.com/user-attachments/assets/aaad4251-0b84-4aa2-bae2-6994addf4850" />
 
 7. Nhận xét bài làm:
-7.1. Hiểu quá trình cài đặt phần mềm và thư viện
-Biết cách cài Apache trên Windows từ bản ZIP (giải nén) và chỉnh httpd.conf/httpd-vhosts.conf.
-Hiểu ServerRoot / DocumentRoot và cách ánh xạ domain nội bộ qua file hosts.
-Biết cách cài Node.js và Node-RED, cách cài Node-RED global vào thư mục tùy chỉnh.
-Biết dùng nssm để chạy Node-RED như một Windows Service (start/stop/restart).
-Biết cài thêm package vào Node-RED qua Manage Palette.
+1️⃣ Quá trình cài đặt phần mềm và thư viện:
+Em đã cài đặt và cấu hình thành công Apache, Node.js, và Node-RED. Quá trình này giúp em hiểu rõ cách các dịch vụ hoạt động độc lập và liên kết với nhau. Việc cài đặt thư viện Node-RED (node-red-contrib-mssql-plus, moment, telegrambot, …) giúp Node-RED có thể kết nối được với cơ sở dữ liệu và xử lý logic như một back-end thực thụ.
+
+2️⃣ Cách sử dụng Node-RED để tạo API back-end:
+Node-RED sử dụng mô hình “flow-based programming” nên việc tạo API trở nên rất trực quan. Chỉ cần kéo thả các node như HTTP In, Function, MSSQL và HTTP Response là có thể xây dựng hoàn chỉnh một API. Em đã tạo được API /timkiem truy vấn dữ liệu từ SQL Server và trả về JSON.
+
+3️⃣ Cách front-end tương tác với back-end:
+Phần front-end em sử dụng HTML, CSS và JavaScript thuần. File thuthao.js sẽ gửi yêu cầu fetch() đến API Node-RED và hiển thị kết quả JSON lên giao diện. Điều này giúp em hiểu cách dữ liệu di chuyển từ người dùng → web → server → CSDL và ngược lại.
