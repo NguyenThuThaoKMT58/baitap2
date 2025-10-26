@@ -123,3 +123,83 @@ Sau khi chạy cmd, kết quả nodered hiển thị trong thư mục D:\nodejs
 Cài nssm: https://nssm.cc/release/nssm-2.24.zip.
 Tạo file "D:\nodejs\nodered\run-nodered.cmd"
 <img width="1227" height="1079" alt="Screenshot 2025-10-26 191551" src="https://github.com/user-attachments/assets/8ac6bdea-e253-4be6-a717-05164f342681" />
+Cài service a1-nodered bằng nssm
+
+Mở cmd (Admin), chuyển đến thư mục nodered: cd /d D:\nodejs\nodered
+Cài đặt service "a1-nodered" bằng lệnh: nssm.exe install a1-nodered "D:\nodejs\nodered\run-nodered.cmd"
+<img width="970" height="498" alt="Screenshot 2025-10-26 202822" src="https://github.com/user-attachments/assets/0271740e-9b94-4fc7-b09e-a55f45dccec2" />
+chạy service "a1-nodered" bằng lệnh: nssm start a1-nodered
+<img width="966" height="505" alt="Screenshot 2025-10-26 202937" src="https://github.com/user-attachments/assets/0ff232bd-d504-44be-b0cb-5c8aff599eca" />
+3. Tạo csdl tuỳ ý trên mssql (sql server 2022), nhớ các thông số kết nối: ip, port, username, password, db_name, table_name
+Tạo username, password:
+-- 1. Tạo database
+IF DB_ID('QLSV') IS NULL
+    CREATE DATABASE QLSV;
+GO
+
+USE QLSV;
+GO
+
+-- 2. Tạo bảng SinhVien
+IF OBJECT_ID('dbo.SinhVien','U') IS NULL
+BEGIN
+CREATE TABLE dbo.SinhVien (
+    MaSV INT IDENTITY(1,1) PRIMARY KEY,
+    HoTen NVARCHAR(200) NOT NULL,
+    Lop NVARCHAR(50) NULL,
+    QueQuan NVARCHAR(200) NULL
+);
+END
+GO
+
+-- 3. Thêm dữ liệu mẫu (chạy mỗi khi cần)
+INSERT INTO dbo.SinhVien (HoTen, Lop, QueQuan)
+VALUES
+(N'Đỗ Duy Cốp', N'CNTT1', N'Thái Nguyên'),
+(N'Nguyễn Thị Thảo', N'CNTT2', N'Hà Nội'),
+(N'Trần Văn B', N'CNTT1', N'Bắc Ninh');
+GO
+
+IP = 127.0.0.1
+PORT = 1433
+USERNAME = user_api
+PASSWORD = Pass@12345
+DB = QLSV
+TABLE = SinhVien
+
+4. Cài đặt thư viện trên nodered:
+Truy cập giao diện nodered bằng url: http://nguyenthuthao.com:1880
+<img width="1912" height="1067" alt="Screenshot 2025-10-26 211006" src="https://github.com/user-attachments/assets/25a5c07f-eeb2-40f8-95f0-9da873064848" />
+Trong giao diện Nodered: Vào Menu (≡ góc phải trên) -> chọn Manage palette -> Chọn tab Install -> Gõ lần lượt các thư viện và nhấn Install cho từng cái
+
+Cài đặt thư viện:
+
+node-red-contrib-mssql-plus
+<img width="718" height="306" alt="Screenshot 2025-10-26 211527" src="https://github.com/user-attachments/assets/93a6e036-2c81-4d21-b39b-95e07d9c10de" />
+node-red-node-mysql
+<img width="696" height="313" alt="Screenshot 2025-10-26 211721" src="https://github.com/user-attachments/assets/7dbe9b52-b830-4841-8e1e-ae12115b29a5" />
+node-red-contrib-telegrambot
+<img width="716" height="317" alt="Screenshot 2025-10-26 211904" src="https://github.com/user-attachments/assets/243fdcf4-849d-4905-882b-bf0f5a708d97" />
+node-red-contrib-moment
+<img width="714" height="339" alt="Screenshot 2025-10-26 211958" src="https://github.com/user-attachments/assets/01dc4e8c-a05a-4fe0-b0c3-94abde9a68cd" />
+node-red-contrib-influxdb
+<img width="716" height="302" alt="Screenshot 2025-10-26 212049" src="https://github.com/user-attachments/assets/2f10c280-c2e7-45c4-81b6-879764fa2b7e" />
+node-red-contrib-duckdns
+![Uploading Screenshot 2025-10-26 212136.png…]()
+node-red-contrib-cron-plus
+![Uploading Screenshot 2025-10-26 212156.png…]()
+Sửa file "D:\nodejs\nodered\work\settings.js":
+adminAuth: {
+       type: "credentials",
+        users: [{
+            username: "admin",
+            password: "$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.",
+            permissions: "*"
+        }]
+    },
+
+Mã hoá mật khẩu có thể thiết lập bằng tool: https://tms.tnut.edu.vn/pw.php
+
+Chạy lại nodered bằng cách: mở cmd (quyền Admin), vào thư mục 'D:\nodejs\nodered' và chạy lệnh 'nssm restart a1-nodered'
+<img width="987" height="517" alt="Screenshot 2025-10-26 213217" src="https://github.com/user-attachments/assets/aaa66115-957c-4be2-8fc8-4e2cd0daf259" />
+Nodered sẽ yêu cầu nhập mật khẩu mới vào được giao diện cho admin tại: http://nguyenthuthao.com:1880
