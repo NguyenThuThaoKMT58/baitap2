@@ -50,27 +50,47 @@ fullname.js: lấy dữ liệu trên form, gửi đến api nodered đã làm �
 BÀI LÀM:
 1. Cài đặt Apache web server:
 Bước 1: Vô hiệu hoá IIS
+
 Nhấn Start → gõ cmd -> Chuột phải vào Command Prompt → chọn Run as administrator -> Sau đó nhập lênh: iisreset /stop
+
 <img width="997" height="405" alt="Screenshot 2025-10-26 144557" src="https://github.com/user-attachments/assets/d7338669-2f42-4ce0-9f6b-cc2e444d4a11" />
+
 Bước 2. Download apache server
+
 Truy cập link: https://www.apachelounge.com/download/ để download apache
+
 Sau khi tải xong sẽ xuất hiện tệp:
+
 <img width="614" height="32" alt="Screenshot 2025-10-26 150457" src="https://github.com/user-attachments/assets/6c554a59-2a28-4ee1-8a55-3b5b7894b7e1" />
+
 Bước 3: Giải nén ra ổ D:
+
 Chuột phải vào file vừa tải -> chọn Extract All... -> Chọn nơi muốn giải nén: D:\ -> Nhấn Extract
+
 Sau khi giải nén xong, sẽ hiện thư mục: D:\Apache24\
+
 <img width="1434" height="1051" alt="Screenshot 2025-10-26 153924" src="https://github.com/user-attachments/assets/6bc56317-35e2-466e-b3d4-36c1d28d088b" />
+
 Bước 4: Cấu hình file: D:\Apache24\conf\httpd.conf
+
 + Mở file: D:\Apache24\conf\httpd.conf
+  
 + Sửa ServerRoot: ServerRoot "c:/Apache24" => ServerRoot "D:/Apache24"
+  
 + Sau mở httpd.conf -> Tìm dòng: #Include conf/extra/httpd-vhosts.conf và bỏ dấu # để bật file vhosts.
+  
 Bước 5: Cấu hình file: D:Apache24\conf\extra\httpd-vhosts.conf
+
 + Mở file: D:Apache24\conf\extra\httpd-vhosts.conf
+  
 + Sau khi mở file sẽ hiển thị:
++ 
   <img width="1382" height="1068" alt="Screenshot 2025-10-26 155513" src="https://github.com/user-attachments/assets/82f5302f-e61f-4685-b9b2-bc95fb9d03cc" />
 
 <img width="978" height="1074" alt="Screenshot 2025-10-26 162121" src="https://github.com/user-attachments/assets/2a18163e-111c-40fa-887e-30bb170fe10c" />
+
 Thêm vào cuối file nội dung sau:
+
 <VirtualHost *:80>
     ServerAdmin admin@nguyenthuthao.com
     DocumentRoot "D:/Apache24/nguyenthuthao"
@@ -79,7 +99,9 @@ Thêm vào cuối file nội dung sau:
     ErrorLog "logs/nguyenthuthao-error.log"
     CustomLog "logs/nguyenthuthao-access.log" common
 </VirtualHost>
+
 Trong file D:\Apache24\conf\httpd.conf sửa: DocumentRoot "D:/Apache24/nguyenthuthao" và <Directory "D:/Apache24/nguyenthuthao">
+
 Bước 6: Tạo thư mục D:\Apache24\nguyenthuthao
 Trong đó tạo file index.html:
 
@@ -92,17 +114,27 @@ Trong đó tạo file index.html:
 Bước 7: Cấu hình file hosts để fake domain
 Mở file: C:\Windows\System32\drivers\etc\hosts (Mở bằng Notepad quyền Admin (Run as Administrator))
 Sau khi mở, thêm dòng: 127.0.0.1 nguyenthuthao.com
+
 <img width="1295" height="1066" alt="image" src="https://github.com/user-attachments/assets/e58e0a61-957b-47b7-b7ac-d7f3089e4e36" />
+
 Bước 8: Cài đặt và khởi động Apache
+
 Mở cmd -> chạy quyền admin (Run as Administrator), rồi chạy:
+
 cd /d D:\Apache24\bin
 httpd.exe -k install
 httpd.exe -k start
+
 <img width="975" height="503" alt="Screenshot 2025-10-26 175907" src="https://github.com/user-attachments/assets/ae206a1e-b7b8-490c-bfd1-640665c780e0" />
+
 Bước 9: Kiểm tra kết quả
+
 Mở trình duyệt, gõ: http://nguyenthuthao.com:8080
+
 <img width="1906" height="1072" alt="Screenshot 2025-10-26 183207" src="https://github.com/user-attachments/assets/24c3f90b-bcd9-46ef-9915-96713c7d1c4f" />
+
 2. Cài đặt nodejs và nodered => Dùng làm backend
+   
 2.1. Cài đặt nodejs
 Tải file: https://nodejs.org/dist/v20.19.5/node-v20.19.5-x64.msi
 Cài đặt bằng giao diện (GUI):
@@ -115,14 +147,21 @@ Kiểm tra: Mở cmd(admin) và chạy:
 cd \nodejs
 node -v
 npm -v
+
 <img width="980" height="506" alt="Screenshot 2025-10-26 190425" src="https://github.com/user-attachments/assets/0b4bca41-7f48-4b11-a586-032b639756d5" />
+
 2.2. Cài đặt nodered
 Chạy cmd (Admin), vào thư mục D:\nodejs, chạy lệnh npm install -g --unsafe-perm node-red --prefix "D:\nodejs\nodered"
 Sau khi chạy cmd, kết quả nodered hiển thị trong thư mục D:\nodejs
+
 <img width="1442" height="1071" alt="Screenshot 2025-10-26 191413" src="https://github.com/user-attachments/assets/fba78db2-e235-4bd5-881a-b21f9eb6782f" />
+
 Cài nssm: https://nssm.cc/release/nssm-2.24.zip.
+
 Tạo file "D:\nodejs\nodered\run-nodered.cmd"
+
 <img width="1227" height="1079" alt="Screenshot 2025-10-26 191551" src="https://github.com/user-attachments/assets/8ac6bdea-e253-4be6-a717-05164f342681" />
+
 Cài service a1-nodered bằng nssm
 
 Mở cmd (Admin), chuyển đến thư mục nodered: cd /d D:\nodejs\nodered
